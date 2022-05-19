@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Input } from '@angular/core';
 import * as THREE from "three";
+
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import Stats from 'three/examples/jsm/libs/stats.module'
@@ -10,7 +11,7 @@ scene.add(new THREE.AxesHelper(5))
 
 // Scene Lighting
 const light = new THREE.PointLight();
-light.position.set(0, 0, 0)
+light.position.set(0, 0, 13)
 light.intensity = 2
 scene.add(light);
 
@@ -25,7 +26,7 @@ const camera = new THREE.PerspectiveCamera(
   1000
 )
 
-camera.position.set(100, 200, 50)
+camera.position.set(0, 8, 13)
 
 
 // Create & Initialize Renderer

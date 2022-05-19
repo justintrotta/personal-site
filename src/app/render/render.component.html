@@ -1,2 +1,17 @@
-<script src="node_modules/three.terrain.js/build/THREE.Terrain.min.js"></script>
+<script src="node_modules/three.terrain.js/build/THREE.Terrain.min.js">{
+    terrainScene = THREE.Terrain({
+        easing: THREE.Terrain.Linear,
+        frequency: 2.5,
+        heightmap: THREE.Terrain.DiamondSquare,
+        material: new THREE.MeshBasicMaterial({color: 0x5566aa}),
+        maxHeight: 100,
+        minHeight: -100,
+        steps: 1,
+        xSegments: xS,
+        xSize: 1024,
+        ySegments: yS,
+        ySize: 1024,
+    })
+    scene.add(terrainScene);
+}</script>
 
