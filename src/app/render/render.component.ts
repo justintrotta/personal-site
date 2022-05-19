@@ -4,16 +4,20 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import Stats from 'three/examples/jsm/libs/stats.module'
 
+// Create THREE scene
 const scene = new THREE.Scene();
 scene.add(new THREE.AxesHelper(5))
 
+// Scene Lighting
 const light = new THREE.PointLight();
-light.position.set(0.8, 0.4, 1.0)
+light.position.set(0, 0, 0)
+light.intensity = 2
 scene.add(light);
 
 const ambinetLight = new THREE.AmbientLight();
 scene.add(ambinetLight);
 
+// Scene Camera
 const camera = new THREE.PerspectiveCamera(
   75,
   window.innerWidth / window.innerHeight,
@@ -21,39 +25,68 @@ const camera = new THREE.PerspectiveCamera(
   1000
 )
 
-camera.position.set(0.8, 0.4, 1.0)
+camera.position.set(100, 200, 50)
 
+
+// Create & Initialize Renderer
 const renderer= new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(renderer.domElement)
 
+// Scene Camera Controls
 const controls = new OrbitControls(camera, renderer.domElement)
 controls.enableDamping = true
 controls.target.set(0, 1, 0)
 
 
-const fbxLoader = new FBXLoader()
-fbxLoader.load(
-  '../assets/xbot.fbx',
-  (object) => {
-    object.traverse(function (child) {
-      if ((child as THREE.Mesh).isMesh) {
-        if ((child as THREE.Mesh).material) {
-          ((child as THREE.Mesh).material as THREE.MeshBasicMaterial).transparent = false
-        }
-      }
-    })
-    scene.add(object)
-  },
-  (xhr) => {
-    console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
-  },
-  (error) => {
-      console.log(error)
-  }
-)
+// Load FBX Model
+// const fbxLoader = new FBXLoader()
+// fbxLoader.load(
+//   '../assets/xbot.fbx',
+//   (object) => {
+//     object.traverse(function (child) {
+//       if ((child as THREE.Mesh).isMesh) {
+//         if ((child as THREE.Mesh).material) {
+//           ((child as THREE.Mesh).material as THREE.MeshBasicMaterial).transparent = false
+//         }
+//       }
+//     })
+//     scene.add(object)
+//   },
+//   (xhr) => {
+//     console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
+//   },
+//   (error) => {
+//       console.log(error)
+//   }
+// )
 
+// Generate Terrain
+function createGround() {
+  const groundGeo = new THREE.PlaneGeometry(1000, 1000, 1500, 1500)
+  const displacementMap = new THREE.TextureLoader().load("../assets/difmap.jpeg")
+  const normalMap = new THREE.TextureLoader().load("../assets/NormalMap.jpg")
+  const colorMap = new THREE.TextureLoader().load("../assets/colormap.png")
 
+  const groundMat = new THREE.MeshStandardMaterial({
+    color: "white",
+    wireframe: false,
+    displacementMap: displacementMap,
+    displacementScale: 300,
+    normalMap: normalMap,
+    map: colorMap,
+    metalness: 0.2, 
+  })
+
+  let groundMesh = new THREE.Mesh(groundGeo, groundMat)
+  scene.add(groundMesh)
+}
+
+createGround();
+
+scene.background = new THREE.Color("#87CEEB")
+
+// Keep renderer same size as window
 window.addEventListener('resize', onWindowResize, false)
 
 function onWindowResize() {
@@ -65,6 +98,8 @@ function onWindowResize() {
 const stats = Stats();
 document.body.appendChild(stats.dom)
 
+
+// Animation and render call
 function animate() {
   requestAnimationFrame(animate)
 
@@ -78,7 +113,6 @@ function animate() {
 function render() {
   renderer.render(scene, camera)
 }
-
 
 animate()
 

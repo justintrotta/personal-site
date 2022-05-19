@@ -20,6 +20,7 @@
     "@angular/router": "~13.3.0",
     "rxjs": "~7.5.0",
     "three": "^0.140.2",
+    "three.terrain.js": "^2.0.0",
     "tslib": "^2.3.0",
     "webgl": "^0.0.7",
     "zone.js": "~0.11.4"
