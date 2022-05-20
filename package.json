@@ -18,9 +18,10 @@
     "@angular/platform-browser": "~13.3.0",
     "@angular/platform-browser-dynamic": "~13.3.0",
     "@angular/router": "~13.3.0",
+    "@spissvinkel/simplex-noise": "^1.0.1",
     "rxjs": "~7.5.0",
+    "simplex-noise": "^3.0.1",
     "three": "^0.140.2",
-    "three.terrain.js": "^2.0.0",
     "tslib": "^2.3.0",
     "webgl": "^0.0.7",
     "zone.js": "~0.11.4"
