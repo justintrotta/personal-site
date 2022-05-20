@@ -57,7 +57,7 @@ planeMat.clearcoat = 0.3
 planeMat.clearcoatRoughness = 0.25
 planeMat.color = new THREE.Color("darkblue")
 planeMat.ior = 1.2
-planeMat.thickness = 10.0
+planeMat.thickness = 10
 let plane = new THREE.Mesh(planeGeo, planeMat);
 plane.castShadow = true;
 plane.receiveShadow = true;
@@ -102,10 +102,7 @@ let animate = function () {
   let time = clock.startTime;
   vertexNoise(plane, time)
 
-   renderer.render(scene, camera);
-
-   
-   
+  renderer.render(scene, camera);
 }
 
 animate()

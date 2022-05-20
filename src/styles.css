@@ -8,11 +8,7 @@
 html,
 body {
   margin: 0;
-  padding: 0;
-  background: #070712;
-  color: #606063;
-  overflow: hidden;
-  font-family: "News Cycle", sans-serif;
+  position: absolute;
 }
 
 #root {
