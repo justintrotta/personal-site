@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Input } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import * as THREE from "three";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
@@ -49,8 +49,7 @@ function createPlane(side: number) {
 const planeGeo = new THREE.PlaneGeometry(40, 40, side, side)
 const planeMat = new THREE.MeshPhysicalMaterial({
   wireframe: false,
-  roughness: 0.5,
-  color: new THREE.Color("#00008B")
+  roughness: 0.5
 });
 planeMat.reflectivity = 0
 planeMat.transmission = 1
@@ -58,7 +57,7 @@ planeMat.roughness = 0.5
 planeMat.metalness = 0.05
 planeMat.clearcoat = 0.3
 planeMat.clearcoatRoughness = 0.25
-planeMat.color = new THREE.Color("#00008B")
+planeMat.color = new THREE.Color(0,0,1)
 planeMat.ior = 1.2
 planeMat.thickness = 10
 let plane = new THREE.Mesh(planeGeo, planeMat);
@@ -142,6 +141,7 @@ animate(time)
 let btnState = false;
 const planeHD = createPlane(500)
 
+let scrollCounter = 0;
 
 
 @Component({
@@ -157,6 +157,22 @@ export class RenderComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  @HostListener('document:wheel', ['$event'])
+  onScrollEvent($event: any) {
+    if($event.deltaY > 0){
+      light.intensity += 0.01
+      light.translateY(-1)
+      light.translateX(-1)
+      light.translateZ(0.5)
+    }
+    if ($event.deltaY < 0){
+      light.intensity -= 0.01
+      light.translateY(1)
+      light.translateX(1)
+      light.translateZ(-0.5)
+    }
   }
   
   toggleHD() {

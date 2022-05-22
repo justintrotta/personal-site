@@ -1,12 +1,12 @@
 div {
     position: absolute; 
-    left: 3%; 
+    left: 3em; 
     top: 2em; 
     position: relative; 
     display: inline-block; 
     color: rgb(231, 231, 231);
-    width: 30%;
-    height: 70%;
+    width: 20em;
+    height: 20em;
     box-shadow: 0 0 1rem 0 rgba(255, 255, 255, 0.2); 
     border-radius: 5px;
     position: relative;
