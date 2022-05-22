@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+
 
 @Component({
   selector: 'app-info',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./info.component.css']
 })
 export class InfoComponent implements OnInit {
-
+  
   constructor() { }
 
   ngOnInit(): void {
+  }
+  @Output() btnClick = new EventEmitter();
+
+  onClick() {
+    this.btnClick.emit()
   }
 
 }

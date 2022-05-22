@@ -4,6 +4,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import Stats from 'three/examples/jsm/libs/stats.module'
 import * as Simplex from '@spissvinkel/simplex-noise';
+import { animation } from '@angular/animations';
 
 
 // Create THREE scene
@@ -40,14 +41,16 @@ document.body.appendChild(renderer.domElement)
 //Simplex Noise setup
 const simplex = Simplex.mkSimplexNoise(Math.random)
 
+
 //Plane Setup
-function createPlane() {
-const side = 300
+let primaryPlane: THREE.Mesh;
+let side = 100;
+function createPlane(side: number) {
 const planeGeo = new THREE.PlaneGeometry(40, 40, side, side)
 const planeMat = new THREE.MeshPhysicalMaterial({
   wireframe: false,
   roughness: 0.5,
-  color: new THREE.Color("darkblue")
+  color: new THREE.Color("#00008B")
 });
 planeMat.reflectivity = 0
 planeMat.transmission = 1
@@ -55,19 +58,19 @@ planeMat.roughness = 0.5
 planeMat.metalness = 0.05
 planeMat.clearcoat = 0.3
 planeMat.clearcoatRoughness = 0.25
-planeMat.color = new THREE.Color("darkblue")
+planeMat.color = new THREE.Color("#00008B")
 planeMat.ior = 1.2
 planeMat.thickness = 10
 let plane = new THREE.Mesh(planeGeo, planeMat);
 plane.castShadow = true;
 plane.receiveShadow = true;
-
-scene.add(plane);
-
 return plane;
 }
 
-let plane = createPlane()
+let plane = createPlane(side)
+primaryPlane = plane;
+scene.add(primaryPlane)
+
 
 // Update vertex with noise
 function vertexNoise(plane: THREE.Mesh, time: number){
@@ -93,23 +96,59 @@ function onWindowResize() {
   renderer.render(scene, camera);
 }
 
+//Scroll Animation Init
+const scrollAnimation: {start: number; end: number; func: () => void}[] = [] 
+let scrollPercent = 0;
+
+//Scroll to increase brightness
+scrollAnimation.push({
+  start: 0,
+  end: 50,
+  func: () => {
+    light.intensity += 0.7
+    light.translateZ(0.5)
+  }
+})
+
+scrollAnimation.push({
+  start: 51,
+  end: 100,
+  func: () => {
+    plane.material.color.setHex
+  }
+})
+
+//Play scroll animation
+// scrollAnimation.forEach(())
+
+//Translate distance scrolled to percent
+document.body.onscroll = () => {
+  scrollPercent = ((document.documentElement.scrollTop || document.body.scrollTop) / 
+  (document.documentElement.scrollHeight || document.body.scrollHeight) - document.documentElement.clientHeight) * 100
+}
+
 // Animate and render
-let animate = function () {
+let clock = new THREE.Clock();
+clock.start();
+let time = clock.startTime;
+function animate (time: number) {
   requestAnimationFrame(animate)
-
-  let clock = new THREE.Clock();
-  clock.start();
-  let time = clock.startTime;
-  vertexNoise(plane, time)
-
+  vertexNoise(primaryPlane, time)
   renderer.render(scene, camera);
 }
 
-animate()
+animate(time)
+
+let btnState = false;
+const planeHD = createPlane(500)
+
 
 
 @Component({
   selector: 'app-render',
+  template: `
+  Button State: {{click}}
+  `,
   templateUrl: './render.component.html',
   styleUrls: ['./render.component.css']
 })
@@ -119,5 +158,21 @@ export class RenderComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  
+  toggleHD() {
+    btnState = !btnState
+    console.log(btnState)
+    console.log(plane)
+    if (btnState) {
+      primaryPlane = planeHD;
+      scene.clear()
+      scene.add(planeHD, light)
+    }
+    else {
+      primaryPlane = plane;
+      scene.clear()
+      scene.add(plane, light)
+    }
+  }
+ 
 }
