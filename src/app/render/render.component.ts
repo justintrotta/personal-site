@@ -95,37 +95,6 @@ function onWindowResize() {
   renderer.render(scene, camera);
 }
 
-//Scroll Animation Init
-const scrollAnimation: {start: number; end: number; func: () => void}[] = [] 
-let scrollPercent = 0;
-
-//Scroll to increase brightness
-scrollAnimation.push({
-  start: 0,
-  end: 50,
-  func: () => {
-    light.intensity += 0.7
-    light.translateZ(0.5)
-  }
-})
-
-scrollAnimation.push({
-  start: 51,
-  end: 100,
-  func: () => {
-    plane.material.color.setHex
-  }
-})
-
-//Play scroll animation
-// scrollAnimation.forEach(())
-
-//Translate distance scrolled to percent
-document.body.onscroll = () => {
-  scrollPercent = ((document.documentElement.scrollTop || document.body.scrollTop) / 
-  (document.documentElement.scrollHeight || document.body.scrollHeight) - document.documentElement.clientHeight) * 100
-}
-
 // Animate and render
 let clock = new THREE.Clock();
 clock.start();
@@ -139,10 +108,7 @@ function animate (time: number) {
 animate(time)
 
 let btnState = false;
-const planeHD = createPlane(500)
-
-let scrollCounter = 0;
-
+const planeHD = createPlane(300)
 
 @Component({
   selector: 'app-render',
