@@ -1,10 +1,7 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener} from '@angular/core';
 import * as THREE from "three";
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
-import Stats from 'three/examples/jsm/libs/stats.module'
 import * as Simplex from '@spissvinkel/simplex-noise';
-import { animation } from '@angular/animations';
+import { InfoComponent } from '../info/info.component';
 
 
 // Create THREE scene
@@ -107,6 +104,7 @@ function animate (time: number) {
 
 animate(time)
 
+//Params/Init for HD plane
 let btnState = false;
 const planeHD = createPlane(300)
 
@@ -125,6 +123,9 @@ export class RenderComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+
+  //Change lighting on mousewheel scroll
   @HostListener('document:wheel', ['$event'])
   onScrollEvent($event: any) {
     if($event.deltaY > 0){
@@ -141,6 +142,7 @@ export class RenderComponent implements OnInit {
     }
   }
   
+  //Toggle plane resolution for quality GPU machines
   toggleHD() {
     btnState = !btnState
     console.log(btnState)
@@ -156,5 +158,5 @@ export class RenderComponent implements OnInit {
       scene.add(plane, light)
     }
   }
- 
 }
+
