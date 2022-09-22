@@ -1,14 +1,19 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild} from '@angular/core';
+import {InfoToRenderService} from '../info-to-render.service';
+
 
 
 @Component({
   selector: 'app-info',
   templateUrl: './info.component.html',
-  styleUrls: ['./info.component.css']
+  styleUrls: ['./info.component.css'],
+  providers: [InfoToRenderService]
 })
 export class InfoComponent implements OnInit {
   
-  constructor() { }
+  constructor() { 
+ 
+  }
 
   ngOnInit(): void {
   }
@@ -17,5 +22,6 @@ export class InfoComponent implements OnInit {
   onClick() {
     this.btnClick.emit()
   }
+  
 
 }
