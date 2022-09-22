@@ -1,4 +1,4 @@
-https://justintrotta.github.io/personal-site/personal-site/
+https://justintrotta.github.io/personal-site/
 
 # PersonalSite
 
