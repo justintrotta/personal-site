@@ -1,4 +1,4 @@
-div {
+div#opener, div#experience {
     position: absolute; 
     left: 6vw; 
     top: 7vh; 
@@ -29,3 +29,15 @@ div {
     margin: -5px;
 
   }
+
+  a:visited, a:link {
+    color: green;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: lawngreen;
+    text-decoration: none;
+    text-shadow: 5px;
+  }
+

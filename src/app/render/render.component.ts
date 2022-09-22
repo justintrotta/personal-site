@@ -145,8 +145,6 @@ export class RenderComponent implements OnInit {
   //Toggle plane resolution for quality GPU machines
   toggleHD() {
     btnState = !btnState
-    console.log(btnState)
-    console.log(plane)
     if (btnState) {
       primaryPlane = planeHD;
       scene.clear()
